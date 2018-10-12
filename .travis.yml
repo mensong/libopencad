@@ -1,0 +1,29 @@
+language: cpp
+sudo: required
+dist: trusty
+compiler:
+- gcc
+- clang
+os:
+- linux
+before_install:
+- echo $LANG
+- echo $LC_ALL
+script: 
+- mkdir build
+- cd build
+- cmake -DBUILD_TESTS=ON ..
+- cmake --build . --target all -- -j4
+- cmake --build . --target test
+branches:
+  only:
+  - master
+  - dev
+notifications:
+  email: 191980@niuitmo.ru
+  irc:
+    template:
+    - "%{repository}/%{branch} (%{commit} - %{author}): %{build_url}: %{message}"
+env:
+  global:
+  - LANG="en_US.UTF-8"
